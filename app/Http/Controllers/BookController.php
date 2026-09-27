@@ -85,4 +85,18 @@ class BookController extends Controller
         Borrowing::create($validated);
         return redirect()->back()->with('success', 'Transaksi peminjaman berhasil dicatat!');
     }
+
+    public function updateBorrowing(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'book_id' => 'required',
+            'borrower_name' => 'required',
+            'borrow_date' => 'required|date',
+        ]);
+
+        $borrowing = Borrowing::findOrFail($id);
+        $borrowing->update($validated);
+
+        return redirect()->back()->with('success', 'Data peminjaman berhasil diperbarui!');
+    }
 }
